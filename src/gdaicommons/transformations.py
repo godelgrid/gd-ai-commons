@@ -1,6 +1,6 @@
 from gdtransform.transform import transformation_builder
 
-from textclassification import TextClassificationTransformation
+from .textclassification import TextClassificationTransformation
 
 
 @transformation_builder(name='text-classification-builder', is_batch=True)
