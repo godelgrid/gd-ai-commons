@@ -3,7 +3,7 @@ from gdtransform.transform import transformation_builder
 from .textclassification import TextClassificationTransformation
 
 
-@transformation_builder(is_batch=True)
+@transformation_builder(name='text-classification-builder', is_batch=True)
 def text_classification(*args, **kwargs):
     model = kwargs['model']
     input_field = kwargs['input_field']
