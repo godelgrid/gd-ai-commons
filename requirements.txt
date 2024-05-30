@@ -41,6 +41,7 @@ nvidia-nvtx-cu12==12.1.105
 packaging==24.0
 pandas==2.2.2
 pkginfo==1.10.0
+protobuf>=5.26.1
 psutil==5.9.8
 pycparser==2.22
 Pygments==2.18.0
@@ -56,6 +57,7 @@ rfc3986==2.0.0
 rich==13.7.1
 safetensors==0.4.3
 SecretStorage==3.3.3
+sentencepiece==0.2.0
 six==1.16.0
 sympy==1.12
 tokenizers==0.19.1
