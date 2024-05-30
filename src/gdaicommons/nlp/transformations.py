@@ -7,6 +7,8 @@ from .text_generation import TextGenerationTransformation
 from .text_labelling import TextLabellingTransformation
 from .text_summarization import TextSummarizationTransformation
 
+VALUE_SEPARATOR = "__sep__"
+
 
 @transformation_builder(name='text-classification-builder', is_batch=True)
 def text_classification(*args, **kwargs):
@@ -27,7 +29,7 @@ def text_labelling(*args, **kwargs):
     input_field = kwargs['input_field']
     output_field = kwargs['output_field']
     labels = kwargs['labels']
-    labels = str(labels).split(sep=",")
+    labels = str(labels).split(sep=VALUE_SEPARATOR)
     labels = [l.strip() for l in labels]
     gpu_device = int(kwargs.get('gpu_device')) if 'gpu_device' in kwargs and kwargs['gpu_device'] else None
 
@@ -44,7 +46,7 @@ def fill_mask(*args, **kwargs):
     mask_placeholder = kwargs.get('mask_placeholder', '[MASK]')
     mask_targets = kwargs.get('mask_targets', None)
     if mask_targets:
-        mask_targets = str(mask_targets).split(sep=",")
+        mask_targets = str(mask_targets).split(sep=VALUE_SEPARATOR)
         mask_targets = [t.strip() for t in mask_targets]
     gpu_device = int(kwargs.get('gpu_device')) if 'gpu_device' in kwargs and kwargs['gpu_device'] else None
 

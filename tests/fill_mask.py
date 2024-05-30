@@ -71,7 +71,7 @@ class FillMaskTest(unittest.TestCase):
             'model': "google-bert/bert-base-uncased",
             'input_field': 'input_field',
             'mask_placeholder': '[MY_MASK]',
-            'mask_targets': 'problem, question',
+            'mask_targets': 'problem__sep__question',
             'output_field': 'all_scores',
         }
         classifier = fill_mask("my-text-classifier", **config)
