@@ -6,8 +6,8 @@ from .text_classification import TextClassificationTransformation
 from .text_generation import TextGenerationTransformation
 from .text_labelling import TextLabellingTransformation
 from .text_summarization import TextSummarizationTransformation
-
-VALUE_SEPARATOR = "__sep__"
+from ..constants import VALUE_SEPARATOR
+from ..utils import blank_if_null, parse_parameter
 
 
 @transformation_builder(name='text-classification-builder', is_batch=True)
@@ -63,14 +63,14 @@ def text_generation(*args, **kwargs):
     model = kwargs['model']
     input_field = kwargs['input_field']
     output_field = kwargs['output_field']
-    max_length = kwargs.get('max_length', None)
-    max_new_tokens = kwargs.get('max_new_tokens', None)
-    min_length = kwargs.get('min_length', None)
-    min_new_tokens = kwargs.get('min_new_tokens', None)
-    do_sample = kwargs.get('do_sample', False)
-    num_beams = kwargs.get('num_beams', 1)
-    temperature = kwargs.get('temperature', 1.0)
-    top_k = kwargs.get('top_k', 50)
+    max_length = parse_parameter(kwargs.get('max_length', None), int)
+    max_new_tokens = parse_parameter(kwargs.get('max_new_tokens', None), int)
+    min_length = parse_parameter(kwargs.get('min_length', None), int)
+    min_new_tokens = parse_parameter(kwargs.get('min_new_tokens', None), int)
+    do_sample = blank_if_null(kwargs.get('do_sample', 'false')).lower() in ['true']
+    num_beams = parse_parameter(kwargs.get('num_beams', '1'), int)
+    temperature = parse_parameter(kwargs.get('temperature', '1.0'), float)
+    top_k = parse_parameter(kwargs.get('top_k', '50'), int)
     gpu_device = int(kwargs.get('gpu_device')) if 'gpu_device' in kwargs and kwargs['gpu_device'] else None
 
     text_generation_transformation = TextGenerationTransformation(model, input_field, output_field,
@@ -91,14 +91,14 @@ def text_summarization(*args, **kwargs):
     model = kwargs['model']
     input_field = kwargs['input_field']
     output_field = kwargs['output_field']
-    max_length = kwargs.get('max_length', None)
-    max_new_tokens = kwargs.get('max_new_tokens', None)
-    min_length = kwargs.get('min_length', None)
-    min_new_tokens = kwargs.get('min_new_tokens', None)
-    do_sample = kwargs.get('do_sample', False)
-    num_beams = kwargs.get('num_beams', 1)
-    temperature = kwargs.get('temperature', 1.0)
-    top_k = kwargs.get('top_k', 50)
+    max_length = parse_parameter(kwargs.get('max_length', None), int)
+    max_new_tokens = parse_parameter(kwargs.get('max_new_tokens', None), int)
+    min_length = parse_parameter(kwargs.get('min_length', None), int)
+    min_new_tokens = parse_parameter(kwargs.get('min_new_tokens', None), int)
+    do_sample = blank_if_null(kwargs.get('do_sample', 'false')).lower() in ['true']
+    num_beams = parse_parameter(kwargs.get('num_beams', '1'), int)
+    temperature = parse_parameter(kwargs.get('temperature', '1.0'), float)
+    top_k = parse_parameter(kwargs.get('top_k', '50'), int)
     gpu_device = int(kwargs.get('gpu_device')) if 'gpu_device' in kwargs and kwargs['gpu_device'] else None
 
     text_summarization_transformation = TextSummarizationTransformation(model, input_field, output_field,
@@ -119,14 +119,14 @@ def text2text_generation(*args, **kwargs):
     model = kwargs['model']
     input_field = kwargs['input_field']
     output_field = kwargs['output_field']
-    max_length = kwargs.get('max_length', None)
-    max_new_tokens = kwargs.get('max_new_tokens', None)
-    min_length = kwargs.get('min_length', None)
-    min_new_tokens = kwargs.get('min_new_tokens', None)
-    do_sample = kwargs.get('do_sample', False)
-    num_beams = kwargs.get('num_beams', 1)
-    temperature = kwargs.get('temperature', 1.0)
-    top_k = kwargs.get('top_k', 50)
+    max_length = parse_parameter(kwargs.get('max_length', None), int)
+    max_new_tokens = parse_parameter(kwargs.get('max_new_tokens', None), int)
+    min_length = parse_parameter(kwargs.get('min_length', None), int)
+    min_new_tokens = parse_parameter(kwargs.get('min_new_tokens', None), int)
+    do_sample = blank_if_null(kwargs.get('do_sample', 'false')).lower() in ['true']
+    num_beams = parse_parameter(kwargs.get('num_beams', '1'), int)
+    temperature = parse_parameter(kwargs.get('temperature', '1.0'), float)
+    top_k = parse_parameter(kwargs.get('top_k', '50'), int)
     gpu_device = int(kwargs.get('gpu_device')) if 'gpu_device' in kwargs and kwargs['gpu_device'] else None
 
     text2text_generation_transformation = Text2TextGenerationTransformation(model, input_field, output_field,
