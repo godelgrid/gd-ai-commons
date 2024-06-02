@@ -1,5 +1,6 @@
 import unittest
 
+from src.gdaicommons.constants import VALUE_SEPARATOR
 from src.gdaicommons.nlp.transformations import text_labelling
 
 
@@ -9,7 +10,7 @@ class TextLabellingTest(unittest.TestCase):
         config = {
             'model': "facebook/bart-large-mnli",
             'input_field': 'input_field',
-            'labels': 'label1, label2, label3, label4',
+            'labels': VALUE_SEPARATOR.join(['label1', 'label2', 'label3', 'label4']),
             'output_field': 'all_scores',
         }
         classifier = text_labelling("my-text-classifier", **config)
@@ -21,15 +22,15 @@ class TextLabellingTest(unittest.TestCase):
             self.assertTrue(isinstance(data['all_scores'], dict))
             self.assertTrue('labels' in data['all_scores'])
             self.assertTrue('scores' in data['all_scores'])
-            self.assertTrue(2, len(data['all_scores']))
-            self.assertTrue(4, len(data['all_scores']['labels']))
-            self.assertTrue(4, len(data['all_scores']['scores']))
+            self.assertEqual(2, len(data['all_scores']))
+            self.assertEqual(4, len(data['all_scores']['labels']))
+            self.assertEqual(4, len(data['all_scores']['scores']))
 
     def test_text_labelling_multiple(self):
         config = {
             'model': "facebook/bart-large-mnli",
             'input_field': 'input_field',
-            'labels': 'label1, label2, label3, label4',
+            'labels': VALUE_SEPARATOR.join(['label1', 'label2', 'label3', 'label4']),
             'output_field': 'all_scores',
         }
         classifier = text_labelling("my-text-classifier", **config)
@@ -42,6 +43,6 @@ class TextLabellingTest(unittest.TestCase):
             self.assertTrue(isinstance(data['all_scores'], dict))
             self.assertTrue('labels' in data['all_scores'])
             self.assertTrue('scores' in data['all_scores'])
-            self.assertTrue(2, len(data['all_scores']))
-            self.assertTrue(4, len(data['all_scores']['labels']))
-            self.assertTrue(4, len(data['all_scores']['scores']))
+            self.assertEqual(2, len(data['all_scores']))
+            self.assertEqual(4, len(data['all_scores']['labels']))
+            self.assertEqual(4, len(data['all_scores']['scores']))

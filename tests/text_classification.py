@@ -19,9 +19,9 @@ class TextClassificationTest(unittest.TestCase):
             self.assertTrue('all_scores' in data)
             all_scores = data['all_scores']
             self.assertTrue(isinstance(all_scores, list))
-            self.assertTrue(2, len(all_scores))
+            self.assertEqual(2, len(all_scores))
             for label in all_scores:
-                self.assertTrue(2, len(label))
+                self.assertEqual(2, len(label))
                 self.assertTrue('score' in label)
                 self.assertTrue(isinstance(label['score'], float))
                 self.assertTrue('label' in label)
@@ -41,9 +41,9 @@ class TextClassificationTest(unittest.TestCase):
             self.assertTrue('all_scores' in data)
             all_scores = data['all_scores']
             self.assertTrue(isinstance(all_scores, list))
-            self.assertTrue(2, len(all_scores))
+            self.assertEqual(2, len(all_scores))
             for label in all_scores:
-                self.assertTrue(2, len(label))
+                self.assertEqual(2, len(label))
                 self.assertTrue('score' in label)
                 self.assertTrue(isinstance(label['score'], float))
                 self.assertTrue('label' in label)
