@@ -46,6 +46,8 @@ class Text2TextGenerationTransformation:
     def transform(self, data_list: List[Dict[str, Any]]):
         indexed_inputs = self._get_indexed_inputs(data_list)
         model_inputs = [d for _, d in indexed_inputs]
+        if not model_inputs:
+            return
         model_outputs = self._pipeline(model_inputs)
         self._set_all_scores(data_list, indexed_inputs, model_outputs)
 

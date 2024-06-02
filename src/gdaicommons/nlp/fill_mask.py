@@ -33,6 +33,8 @@ class FillMaskTransformation:
     def transform(self, data_list: List[Dict[str, Any]]):
         indexed_inputs = self._get_indexed_inputs(data_list)
         model_inputs = [d for _, d in indexed_inputs]
+        if not model_inputs:
+            return
         if self._mask_placeholder != '[MASK]':
             model_inputs = [str(d).replace(self._mask_placeholder, '[MASK]') for d in model_inputs]
         if self._mask_targets:
