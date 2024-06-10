@@ -18,7 +18,8 @@ class FillMaskTransformation:
                  mask_placeholder: str = '[MASK]',
                  mask_targets: Optional[List[str]] = None,
                  top_k_scores: Optional[int] = 5,
-                 gpu_device: Optional[int] = None):
+                 gpu_device: Optional[int] = None,
+                 batch_size: Optional[int] = None):
         self._model = model
         self._input_field = input_field
         self._output_field = output_field
@@ -26,9 +27,13 @@ class FillMaskTransformation:
         self._mask_targets = mask_targets
         self._top_k_scores = top_k_scores if top_k_scores else 5
         self._gpu_device = gpu_device
+        extra_args = {}
+        if batch_size:
+            extra_args['batch_size'] = batch_size
         self._pipeline = pipeline(model=self._model, device=self._gpu_device,
                                   top_k=self._top_k_scores,
-                                  task='fill-mask')
+                                  task='fill-mask',
+                                  **extra_args)
 
     def transform(self, data_list: List[Dict[str, Any]]):
         indexed_inputs = self._get_indexed_inputs(data_list)

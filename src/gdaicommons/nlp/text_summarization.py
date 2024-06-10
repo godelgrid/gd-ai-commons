@@ -20,11 +20,15 @@ class TextSummarizationTransformation:
                  num_beams: Optional[int] = 1,
                  temperature: Optional[float] = 1.0,
                  top_k: Optional[int] = 50,
-                 gpu_device: Optional[int] = None):
+                 gpu_device: Optional[int] = None,
+                 batch_size: Optional[int] = None):
         self._model = model
         self._input_field = input_field
         self._output_field = output_field
         self._gpu_device = gpu_device
+        extra_args = {}
+        if batch_size:
+            extra_args['batch_size'] = batch_size
         model_kwargs = {}
         if max_length:
             model_kwargs['max_length'] = max_length,
@@ -41,6 +45,7 @@ class TextSummarizationTransformation:
         set_seed(0)  # setting globally; might conflict with other models
         self._pipeline = pipeline(model=self._model, device=self._gpu_device,
                                   task='summarization',
+                                  **extra_args,
                                   **model_kwargs)
 
     def transform(self, data_list: List[Dict[str, Any]]):

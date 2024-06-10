@@ -12,15 +12,20 @@ class TextLabellingTransformation:
     """
 
     def __init__(self, model: str, input_field: str, output_field: str, labels: List[str],
-                 gpu_device: Optional[int] = None):
+                 gpu_device: Optional[int] = None,
+                 batch_size: Optional[int] = None):
         self._model = model
         self._input_field = input_field
         self._output_field = output_field
         self._labels = labels
         self._gpu_device = gpu_device
+        extra_args = {}
+        if batch_size:
+            extra_args['batch_size'] = batch_size
         self._pipeline = pipeline(model=self._model, device=self._gpu_device,
                                   top_k=len(labels),
-                                  task='zero-shot-classification')
+                                  task='zero-shot-classification',
+                                  **extra_args)
 
     def transform(self, data_list: List[Dict[str, Any]]):
         indexed_inputs = self._get_indexed_inputs(data_list)
