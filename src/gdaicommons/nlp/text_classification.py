@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from transformers import pipeline
 
-from src.gdaicommons.utils import normalize_model_output
+from ..utils import normalize_model_output
 
 
 class TextClassificationTransformation:
